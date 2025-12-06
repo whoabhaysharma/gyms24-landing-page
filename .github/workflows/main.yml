@@ -1,21 +1,21 @@
-name: Deploy to Cloudflare Pages
+name: Smoke Test
 
 on:
   push:
-    branches: ["master"]
+    branches:
+      - "*"
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: your-project-name   # exact CF Pages project name
-          directory: ./                   # root of your repo
+      - name: Run a basic test
+        run: echo "GitHub Actions is working! 🎉"
+
+      - name: Fail if needed
+        run: |
+          echo "Everything works, nothing to see here."
